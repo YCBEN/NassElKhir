@@ -7,15 +7,14 @@
             <div class="card">
                 <div class="card-header">
 
-                   
                         <h1>Events Administrations</h1> 
                         <a href="/events" class="mr-5" style='color:grey; text-decoration: none;'>All</a>
                         <a href="/events/pending" class="mr-5"  style='color:grey; text-decoration: none;'>Pending</a>
                         <a href="/events/refused" class="mr-5" style='color:grey; text-decoration: none;'>Refused</a>
                         <a href="/events/accepted" class="mr-5" style='color:grey; text-decoration: none;'>Accepted</a>
-
+                        <a href="/events/archived" class="mr-5" style='color:grey; text-decoration: none;'>Archived</a>
                 
-                    <a href="/add-post" class="btn btn-success btn-sm " style="float:right">Add</a>
+                    <a href="/addEvent" class="btn btn-success btn-sm " style="float:right">Add</a>
                 </div>
                 
                     @if (Session::has('event_refused'))
@@ -25,6 +24,14 @@
                     @elseif (Session::has('event_accepted'))
                     <div class="alert alert-success" role="alert">
                         {{ Session::get('event_accepted')}}
+                    </div>
+                    @elseif (Session::has('event_sent'))
+                    <div class="alert alert-success" role="alert">
+                        {{ Session::get('event_sent')}}
+                    </div>
+                    @elseif (Session::has('event_archived'))
+                    <div class="alert alert-dark" role="alert">
+                        {{ Session::get('event_archived')}}
                     </div>
                     @endif
                 <div class="card-body">
@@ -84,8 +91,16 @@
                                 @endif
                                 <td>
                                     <a href="/events/{{$event->id}}" class="btn btn-primary btn-sm mt-1">Details</a>
+                                    @if ($event->accepted != 1 )
                                     <a href="/events/accepted/{{$event->id}}" class="btn btn-success btn-sm mt-1">Accept</a>
+                                    @endif
+                                    @if ($event->accepted != -1 )
                                     <a href="/events/refused/{{$event->id}}" class="btn btn-danger btn-sm mt-1">Refuse</a>
+                                    @endif
+                                    @if ($event->accepted == -1 )
+                                        <a href="/events/archived/{{$event->id}}" class="btn btn-dark btn-sm mt-1">Archive</a>
+ 
+                                    @endif
                                     <!-- i ll add archive!-->
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Archive;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -38,18 +39,18 @@ class EventController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'=>['required','unique:posts' ,new Uppercase],
+            'title'=>'required',
             'description'=>'required',
             //'image'=>'required|mimes:jpg,png,jpeg|max:5040'
-            'adress'=>['required','unique:events'],
-            'state'=>['required','min:1','max:5']
+            'address'=>'required',
+            'state'=>'required'
         ]);
-
-
+        
+        
         $event = Event::create([
             'title'=> $request->title,
             'description'=> $request->description,
-            'adress'=> $request->adress,
+            'adress'=> $request->address,
             'state'=> $request->state,
         ]);
 
@@ -105,8 +106,10 @@ class EventController extends Controller
     }
 
     public function oneEvent($id){
+        
         $event = Event::where('id',$id)->first();
-        dd($event);
+
+        
     }
 
     public function acceptedEvent($id){
@@ -125,6 +128,30 @@ class EventController extends Controller
 
         return back()->with('event_refused',"The event has been Refused");
         //dd($event);
+    }
+
+    
+    public function archivedEvent($id){
+        $event = Event::where('id',$id)->first();
+
+        if(Archive::where('id_event',$event->id)->exists()){
+
+            return redirect('/events')->with('event_archived','The event has been already archived.');
+        }else{
+            $event = Archive::create([
+                'id_event'=>$event->id,
+                'title'=> $event->title,
+                'description'=> $event->description,
+                'adress'=> $event->adress,
+                'state'=> $event->state,
+                'accepted'=> $event->accepted,
+            ]);
+            return redirect('/events')->with('event_archived','The event has been archived succesfully.');
+            
+        }
+        
+       
+
     }
 
 
@@ -146,4 +173,5 @@ class EventController extends Controller
         //dd($event);
         return  view('homevents',compact('events'));
     }
+
 }
