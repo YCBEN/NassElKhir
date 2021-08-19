@@ -16,6 +16,14 @@ class User extends Authenticatable
      *
      * @var array
      */
+
+    public function event(){
+        return $this->hasmany(Event::class);
+    }
+
+
+
+    
     protected $fillable = [
         'name',
         'email',

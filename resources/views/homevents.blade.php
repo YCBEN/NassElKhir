@@ -15,11 +15,12 @@
                         <a href="/events/archived" class="mr-5" style='color:grey; text-decoration: none;'>Archived</a>
                 
                     <a href="/addEvent" class="btn btn-success btn-sm " style="float:right">Add</a>
+                    <a href={{route('adminHome')}} class="btn btn-success btn-sm " style="float:right">Admin</a>
                 </div>
                 
-                    @if (Session::has('event_refused'))
+                    @if (Session::has('event_permission'))
                     <div class="alert alert-danger" role="alert">
-                        {{ Session::get('event_refused')}}
+                        {{ Session::get('event_permission')}}
                     </div>
                     @elseif (Session::has('event_accepted'))
                     <div class="alert alert-success" role="alert">
@@ -97,7 +98,7 @@
                                     @if ($event->accepted != -1 )
                                     <a href="/events/refused/{{$event->id}}" class="btn btn-danger btn-sm mt-1">Refuse</a>
                                     @endif
-                                    @if ($event->accepted == -1 )
+                                    @if ($event->accepted == -1  )
                                         <a href="/events/archived/{{$event->id}}" class="btn btn-dark btn-sm mt-1">Archive</a>
  
                                     @endif

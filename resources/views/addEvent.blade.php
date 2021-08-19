@@ -2,7 +2,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <!--if (Auth::user())-->
+    @if (Auth::user())
         <div class="container mt-3">
             <div class="row">
                 <div class="col-md-6 offset-md-3">
@@ -80,7 +80,7 @@
                                     <input type="file" class="form-control" name="image">
                                     
                                 </div>
-                                <!--<input type="hidden" name="id_user" value=" Auth::user()->id ">-->
+                                <input type="hidden" name="id_user" value=" {{ Auth::user()->id }} ">
                                 <hr>
                                 <div class="text-center">
                                     <input type="submit" class="btn btn-success center" value="Post">
@@ -93,7 +93,7 @@
                 </div>
             </div>
         </div>
-    <!-- else
+    @else
 
     <div class="row">
         <div class="col-md-6 offset-md-3">
@@ -107,5 +107,5 @@
             </div>
         </div>
     </div>
-    endif-->
+    @endif
 @endsection

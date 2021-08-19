@@ -22,6 +22,10 @@ class CreateEventsTable extends Migration
             $table->string('state');
             $table->boolean('accepted')->default(0);
             $table->timestamps();
+            $table->foreignId('user_id')   
+            ->constrained()
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
         });
     }
 

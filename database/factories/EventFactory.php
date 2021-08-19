@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Event;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class EventFactory extends Factory
@@ -25,9 +26,9 @@ class EventFactory extends Factory
             'title'=> $this->faker->sentence,
             'description' => $this->faker->text,
             'adress'=> (string)$this->faker->address,
-            'state'=>$this->faker->numberBetween(1, 5)
-
-            //
-        ];
+            'state'=>$this->faker->numberBetween(1, 5),
+            'user_id' => User::inRandomOrder()->first()->id,
+            ];
     }
+
 }

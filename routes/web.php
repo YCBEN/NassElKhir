@@ -15,6 +15,16 @@ use App\Http\Controllers\ArchiveController;
 |
 */
 
+
+
+//##############Admin Route##################
+
+Route::get('/admin/home', function () {
+    return view('admin.adminHome');
+})->name('adminHome')->middleware('is_admin');
+
+
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -23,6 +33,12 @@ Route::get('/', function () {
 Route::get('/addEvent', function () {
     return view('addEvent');
 });
+                                                //##############Error 404##################
+Route::get('error-400', function () {
+    
+});
+
+
 
 Route::post('/addEvent',[EventController::class,'store'])->name('add.event');
 Auth::routes();
@@ -30,10 +46,11 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-Route::get('/events', [EventController::class, 'index'])->name('events');
+Route::get('/events', [EventController::class, 'index'])->name('events')->middleware('is_admin');;
 Route::get('/events/pending', [EventController::class, 'pendingEvents'])->name('pending.events');
 Route::get('/events/refused', [EventController::class, 'refusedEvents'])->name('refused.events');
 Route::get('/events/accepted', [EventController::class, 'acceptedEvents'])->name('accepted.events');
+
 
 Route::get('/events/archived', [ArchiveController::class, 'archivedEvents'])->name('accepted.events');
 

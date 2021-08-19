@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\Archive;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
@@ -38,6 +39,15 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
+
+
+        
+        
+
+        $newImageName = time().'-'.$request->title .'.'.$request->image->extension(); 
+        
+        $request->image->move(public_path('images'), $newImageName);
+        
         $request->validate([
             'title'=>'required',
             'description'=>'required',
@@ -46,12 +56,17 @@ class EventController extends Controller
             'state'=>'required'
         ]);
         
+    
         
         $event = Event::create([
+            
             'title'=> $request->title,
             'description'=> $request->description,
             'adress'=> $request->address,
             'state'=> $request->state,
+            'updated_at' => NULL,
+            'user_id'=> Auth::user()->id,
+            'image_path'=> $newImageName,   
         ]);
 
 
@@ -108,9 +123,11 @@ class EventController extends Controller
     public function oneEvent($id){
         
         $event = Event::where('id',$id)->first();
-
+        return view('eventDetails',compact('event'));
         
     }
+
+    /// #################### Events Permissions #############################
 
     public function acceptedEvent($id){
         $event = Event::where('id',$id)->update([
@@ -136,7 +153,7 @@ class EventController extends Controller
 
         if(Archive::where('id_event',$event->id)->exists()){
 
-            return redirect('/events')->with('event_archived','The event has been already archived.');
+            return back()->with('event_archived','The event has been already archived.');
         }else{
             $event = Archive::create([
                 'id_event'=>$event->id,
@@ -146,15 +163,19 @@ class EventController extends Controller
                 'state'=> $event->state,
                 'accepted'=> $event->accepted,
             ]);
-            return redirect('/events')->with('event_archived','The event has been archived succesfully.');
+            return back()->with('event_archived','The event has been archived succesfully.');
             
         }
         
        
 
     }
+// ###############################################################################
 
 
+
+
+   /// #################### Listing Events #############################
     
     public function pendingEvents(){
         $events = Event::where('accepted',0)->get();
@@ -174,4 +195,7 @@ class EventController extends Controller
         return  view('homevents',compact('events'));
     }
 
+
+    //for the archived events the function is in the ArchiveController !!!!
+    // ###############################################################################
 }
