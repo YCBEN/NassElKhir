@@ -16,9 +16,19 @@ class EventController extends Controller
      */
     public function index()
     {
+        //$events = Event::where('accepted','=','0')->orderBy('priority','ASC');
+        $events = Event::all()->sortByDesc('state')->take(10)->sortByDesc('created_at')->sortByDesc('state');
+        //dd($events);
+        //$events = Event::all()->sortByDesc("created_at");
+        
+        return  view('welcome',compact('events'));
+    }
+
+
+    public function adminIndex(){
         $events = Event::all()->sortByDesc("created_at");
         
-        return  view('homevents',compact('events'));
+        return  view('admin/adminEvents',compact('events'));
     }
 
     /**

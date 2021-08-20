@@ -20,7 +20,9 @@ class CreateEventsTable extends Migration
             $table->string('adress');
             //$table->string('type')->default('');
             $table->string('state');
+            $table->string('image_path')->nullable();
             $table->boolean('accepted')->default(0);
+            $table->unsignedBigInteger('priority')->default(0);
             $table->timestamps();
             $table->foreignId('user_id')   
             ->constrained()

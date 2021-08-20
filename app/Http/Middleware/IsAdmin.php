@@ -17,15 +17,24 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::user()){
-            if(auth()->user()->is_admin == 1){
-
-                return $next($request);
-            }
-            return back()->with('event_permission',"you do not have the permission");
-            
+        if (Auth::check() && Auth::user()->is_admin == 1) {
+            return $next($request);
         }
-       
-        return redirect('/error-400-notfound');
+        abort(404);
+        
+        
+        
+        
+        
+        
+        // if(Auth::user()){
+        //     if(auth()->user()->is_admin == 1){
+
+        //         return $next($request);
+        //     }
+        //     return redirect('/error-400-notfound');
+            
+        // }
+        
     }
 }
