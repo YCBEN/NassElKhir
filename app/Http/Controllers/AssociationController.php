@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Archive;
+use App\Models\Association;
 use Illuminate\Http\Request;
 
-class ArchiveController extends Controller
+class AssociationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class ArchiveController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Archive  $archive
+     * @param  \App\Models\Association  $association
      * @return \Illuminate\Http\Response
      */
-    public function show(Archive $archive)
+    public function show(Association $association)
     {
         //
     }
@@ -52,10 +52,10 @@ class ArchiveController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Archive  $archive
+     * @param  \App\Models\Association  $association
      * @return \Illuminate\Http\Response
      */
-    public function edit(Archive $archive)
+    public function edit(Association $association)
     {
         //
     }
@@ -64,10 +64,10 @@ class ArchiveController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Archive  $archive
+     * @param  \App\Models\Association  $association
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Archive $archive)
+    public function update(Request $request, Association $association)
     {
         //
     }
@@ -75,20 +75,11 @@ class ArchiveController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Archive  $archive
+     * @param  \App\Models\Association  $association
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Archive $archive)
+    public function destroy(Association $association)
     {
-        
-    }
-
-
-    public function archivedEvents(){
-
-        $events = Archive::all()->sortByDesc("created_at");
-
-        return  view('admin/adminEvents',compact('events'));
-
+        //
     }
 }

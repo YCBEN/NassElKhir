@@ -21,6 +21,12 @@ use App\Http\Controllers\ArchiveController;
 
 Route::get('/admin', [EventController::class,'adminIndex'])->name('admin')->middleware('is_admin');
 
+Route::get('/admin/events', [EventController::class, 'index'])->name('events')->middleware('is_admin');
+Route::get('/admin/events/pending', [EventController::class, 'pendingEvents'])->name('pending.events')->middleware('is_admin');
+Route::get('/admin/events/refused', [EventController::class, 'refusedEvents'])->name('refused.events')->middleware('is_admin');
+Route::get('/admin/events/accepted', [EventController::class, 'acceptedEvents'])->name('accepted.events')->middleware('is_admin');
+Route::get('/admin/events/archived', [ArchiveController::class, 'archivedEvents'])->name('archived.events')->middleware('is_admin');
+
 //##############Admin Route##################
 
 Route::get('/welcome',[EventController::class,'index'])->name('welcome');
@@ -49,13 +55,8 @@ Route::get('logout', function ()
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-Route::get('/events', [EventController::class, 'index'])->name('events');
-Route::get('/events/pending', [EventController::class, 'pendingEvents'])->name('pending.events');
-Route::get('/events/refused', [EventController::class, 'refusedEvents'])->name('refused.events');
-Route::get('/events/accepted', [EventController::class, 'acceptedEvents'])->name('accepted.events');
 
 
-Route::get('/events/archived', [ArchiveController::class, 'archivedEvents'])->name('accepted.events');
 
 
 
@@ -64,7 +65,7 @@ Route::get('/events/archived', [ArchiveController::class, 'archivedEvents'])->na
 
 Route::get('/events/accepted/{id}', [EventController::class, 'acceptedEvent'])->name('accept.event');
 Route::get('/events/refused/{id}', [EventController::class, 'refusedEvent'])->name('refused.event');
-Route::get('/events/archived/{id}', [EventController::class, 'archivedEvent'])->name('archived.events');
+Route::get('/events/archived/{id}', [EventController::class, 'archivedEvent']);
 
 
 Route::get('/events/{id}', [EventController::class, 'oneEvent'])->name('events.by.id');

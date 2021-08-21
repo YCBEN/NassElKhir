@@ -8,11 +8,11 @@
                 <div class="card-header">
 
                         <h1>Events Administrations</h1> 
-                        <a href="/events" class="mr-5" style='color:grey; text-decoration: none;'>All</a>
-                        <a href="/events/pending" class="mr-5"  style='color:grey; text-decoration: none;'>Pending</a>
-                        <a href="/events/refused" class="mr-5" style='color:grey; text-decoration: none;'>Refused</a>
-                        <a href="/events/accepted" class="mr-5" style='color:grey; text-decoration: none;'>Accepted</a>
-                        <a href="/events/archived" class="mr-5" style='color:grey; text-decoration: none;'>Archived</a>
+                        <a href="{{ route('admin') }}" class="mr-5" style='color:grey; text-decoration: none;'>All</a>
+                        <a href="{{ route('pending.events')}}" class="mr-5"  style='color:grey; text-decoration: none;'>Pending</a>
+                        <a href="{{ route('refused.events') }}" class="mr-5" style='color:grey; text-decoration: none;'>Refused</a>
+                        <a href="{{ route('accepted.events') }}" class="mr-5" style='color:grey; text-decoration: none;'>Accepted</a>
+                        <a href="{{ route('archived.events') }}" class="mr-5" style='color:grey; text-decoration: none;'>Archived</a>
 
                     <a href="/addEvent" class="btn btn-success btn-sm" style="float:right">Add</a>
                     <!--<a href=route('adminHome')}} class="btn btn-success btn-sm " style="float:right">Admin</a>-->

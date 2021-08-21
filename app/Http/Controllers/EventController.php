@@ -165,7 +165,7 @@ class EventController extends Controller
 
             return back()->with('event_archived','The event has been already archived.');
         }else{
-            $event = Archive::create([
+            $eventInArchives = Archive::create([
                 'id_event'=>$event->id,
                 'title'=> $event->title,
                 'description'=> $event->description,
@@ -173,7 +173,14 @@ class EventController extends Controller
                 'state'=> $event->state,
                 'accepted'=> $event->accepted,
             ]);
-            return back()->with('event_archived','The event has been archived succesfully.');
+            $state = $event->delete();
+            
+            if($state)
+                return back()->with('event_archived','The event has been archived succesfully.');
+            else
+                return back()->with('event_archived','The event has not been archived, please try again');
+
+            
             
         }
         
@@ -190,19 +197,19 @@ class EventController extends Controller
     public function pendingEvents(){
         $events = Event::where('accepted',0)->get();
         //dd($event);
-        return  view('homevents',compact('events'));
+        return  view('admin/adminEvents',compact('events'));
     }
 
     public function refusedEvents(){
         $events = Event::where('accepted',-1)->get();
         //dd($event);
-        return  view('homevents',compact('events'));
+        return  view('admin/adminEvents',compact('events'));
     }
 
     public function acceptedEvents(){
         $events = Event::where('accepted',1)->get()->sortByDesc("state");
         //dd($event);
-        return  view('homevents',compact('events'));
+        return  view('admin/adminEvents',compact('events'));
     }
 
 
